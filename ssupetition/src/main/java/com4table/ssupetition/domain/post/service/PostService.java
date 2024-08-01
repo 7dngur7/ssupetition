@@ -456,6 +456,52 @@ public class PostService {
 
     }
 
+    public List<PostResponse.AllListDTO> searchPostsSortedByAgreeExceptCategory(String keyword) {
+
+        List<Post> posts = postRepository.findAllOrderByAgreeDesc();
+
+        // 제목 또는 내용에 키워드가 포함된 게시물 필터링
+        List<Post> filteredPosts = posts.stream()
+                .peek(post -> log.info("원본 포스트 제목: {}, 내용: {}", post.getTitle(), post.getContent()))
+                .filter(post -> post.getTitle().contains(keyword) || post.getContent().contains(keyword))
+                .peek(post -> log.info("필터링된 포스트 제목: {}, 내용: {}", post.getTitle(), post.getContent()))
+                .collect(Collectors.toList());
+
+        // DTO로 변환하여 반환
+        return filteredPosts.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    public List<PostResponse.AllListDTO> searchPostsSortedByExpiryExceptCategory(String keyword) {
+
+        List<Post> posts = postRepository.findAllOrderByExpiryAsc();
+
+        // 제목 또는 내용에 키워드가 포함된 게시물 필터링
+        List<Post> filteredPosts = posts.stream()
+                .peek(post -> log.info("원본 포스트 제목: {}, 내용: {}", post.getTitle(), post.getContent()))
+                .filter(post -> post.getTitle().contains(keyword) || post.getContent().contains(keyword))
+                .peek(post -> log.info("필터링된 포스트 제목: {}, 내용: {}", post.getTitle(), post.getContent()))
+                .collect(Collectors.toList());
+
+        // DTO로 변환하여 반환
+        return filteredPosts.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    public List<PostResponse.AllListDTO> searchPostsSortedByCreatedDateExceptCategory(String keyword) {
+
+        List<Post> posts = postRepository.findAllOrderByCreatedDateDesc();
+
+        // 제목 또는 내용에 키워드가 포함된 게시물 필터링
+        List<Post> filteredPosts = posts.stream()
+                .peek(post -> log.info("원본 포스트 제목: {}, 내용: {}", post.getTitle(), post.getContent()))
+                .filter(post -> post.getTitle().contains(keyword) || post.getContent().contains(keyword))
+                .peek(post -> log.info("필터링된 포스트 제목: {}, 내용: {}", post.getTitle(), post.getContent()))
+                .collect(Collectors.toList());
+
+        // DTO로 변환하여 반환
+        return filteredPosts.stream().map(this::convertToDto).collect(Collectors.toList());
+
+    }
+
 
     //최근에 메일을 날리거나 메일을 받은 글
     public List<PostResponse.AllListDTO> getPostsByUserIdAndType(Long userId) {

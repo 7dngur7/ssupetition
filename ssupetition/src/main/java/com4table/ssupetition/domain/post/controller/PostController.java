@@ -34,6 +34,31 @@ public class PostController {
         return postService.searchPosts(keyword);
     }
 
+    @PostMapping("/search/sorted-by-agree")
+    public ResponseEntity<List<PostResponse.AllListDTO>> searchPostsSortedByAgreeExceptCategory(
+            @RequestBody Map<String, String> body) {
+        String keyword = body.get("keyword");
+        List<PostResponse.AllListDTO> posts = postService.searchPostsSortedByAgreeExceptCategory(keyword);
+        return ResponseEntity.ok(posts);
+    }
+
+    @PostMapping("/search/sorted-by-expiry")
+    public ResponseEntity<List<PostResponse.AllListDTO>> searchPostsSortedByExpiryExceptCategory(
+            @RequestBody Map<String, String> body) {
+        String keyword = body.get("keyword");
+        List<PostResponse.AllListDTO> posts = postService.searchPostsSortedByExpiryExceptCategory(keyword);
+        return ResponseEntity.ok(posts);
+    }
+
+    @PostMapping("/search/sorted-by-created-date")
+    public ResponseEntity<List<PostResponse.AllListDTO>> searchPostsSortedByCreatedDateExceptCategory(
+            @RequestBody Map<String, String> body) {
+        String keyword = body.get("keyword");
+        List<PostResponse.AllListDTO> posts = postService.searchPostsSortedByCreatedDateExceptCategory(keyword);
+        return ResponseEntity.ok(posts);
+    }
+
+
     @PostMapping("/search/sorted-by-agree/{category}")
     public ResponseEntity<List<PostResponse.AllListDTO>> searchPostsSortedByAgree(
             @PathVariable(name="category") String category,
