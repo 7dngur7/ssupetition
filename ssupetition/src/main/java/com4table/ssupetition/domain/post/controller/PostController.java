@@ -34,7 +34,7 @@ public class PostController {
         return postService.searchPosts(keyword);
     }
 
-    @PostMapping("/search/sorted-by-agree/{category}")
+    @GetMapping("/search/sorted-by-agree/{category}")
     public ResponseEntity<List<PostResponse.AllListDTO>> searchPostsSortedByAgree(
             @PathVariable(name="category") String category,
             @RequestBody Map<String, String> body) {
@@ -43,7 +43,7 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
-    @PostMapping("/search/sorted-by-expiry/{category}")
+    @GetMapping("/search/sorted-by-expiry/{category}")
     public ResponseEntity<List<PostResponse.AllListDTO>> searchPostsSortedByExpiry(
             @PathVariable(name="category") String category,
             @RequestBody Map<String, String> body) {
