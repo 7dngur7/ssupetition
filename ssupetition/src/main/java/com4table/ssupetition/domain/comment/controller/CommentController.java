@@ -5,11 +5,13 @@ import com4table.ssupetition.domain.comment.dto.CommentRequest;
 import com4table.ssupetition.domain.comment.dto.CommentResponse;
 import com4table.ssupetition.domain.comment.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/comments")
 @RequiredArgsConstructor
@@ -19,8 +21,12 @@ public class CommentController {
 
     @PostMapping("/add/{postId}/{userId}")
     public ResponseEntity<Comment> addComment(@PathVariable(name = "userId") Long userId, @PathVariable(name = "postId") Long postId, @RequestBody CommentRequest.AddDTO addDTO) {
-        Comment commentResponse = commentService.addComment(userId, postId, addDTO);
-        return ResponseEntity.ok(commentResponse);
+        Boolean checkSuccess = commentService.addComment(userId, postId, addDTO);
+        log.info("checksuccess:{}",checkSuccess);
+        if(!checkSuccess){
+            return ResponseEntity.status(500).body(null);
+        }
+        return ResponseEntity.status(200).body(null);
     }
 
     @DeleteMapping("/delete/{commentId}")

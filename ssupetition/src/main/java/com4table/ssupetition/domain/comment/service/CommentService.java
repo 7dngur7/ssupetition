@@ -27,7 +27,7 @@ public class CommentService {
     private final UserRepository userRepository;
     private final CommentPostRepository commentPostRepository;
 
-    public Comment addComment(Long userId, Long postId, CommentRequest.AddDTO addDTO) {
+    public Boolean addComment(Long userId, Long postId, CommentRequest.AddDTO addDTO) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + userId));
         Post post = postRepository.findById(postId)
@@ -45,7 +45,7 @@ public class CommentService {
                     .build();
             commentPostRepository.save(commentPost);
         }
-        return savedComment;
+        return true;
     }
 
     public void removeComment(Long commentId) {
